@@ -43,6 +43,10 @@ const ForgotPassword = () => {
         }
         else if (inputValue.email.trim()) {
             setLoading(true);
+            if (event.type === "click") {
+                setStart(true);
+                setTime(600);
+            }
             try {
                 let data = await fetch(`${AUTHURL}/auth/send-otp`, {
                     method: "post",
@@ -127,11 +131,6 @@ const ForgotPassword = () => {
             clearInterval(interval);
         }
     }, [start]);
-
-    const handleResend = () => {
-        setStart(true);
-        setTime(600);
-    }
 
     let second = time % 60;
     let minute = Math.floor(time / 60);
@@ -225,7 +224,7 @@ const ForgotPassword = () => {
                     </form>
                     <div className="forgot-link">
                         <Link to={'/login'} style={{ color: "red" }}>Back to Login</Link>
-                        <span>{start ? "Resend in: " + (minute < 10 ? "0" + minute : minute) + ":" + (second < 10 ? "0" + second : second) : <button onClick={handleResend} className="resend-btn">Resend OTP</button>}</span>
+                        <span>{start ? "Resend in: " + (minute < 10 ? "0" + minute : minute) + ":" + (second < 10 ? "0" + second : second) : <button onClick={handleSendOtp} className="resend-btn">Resend OTP</button>}</span>
                     </div>
                 </div>}
 
